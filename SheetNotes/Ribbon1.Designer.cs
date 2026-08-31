@@ -37,7 +37,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.btnSheetNotes = this.Factory.CreateRibbonButton();
+            this.btnGridNotes = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -46,23 +46,23 @@
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.group1);
-            this.tab1.Label = "TabAddIns";
+            this.tab1.Label = "GridNotes";
             this.tab1.Name = "tab1";
             // 
             // group1
             // 
-            this.group1.Items.Add(this.btnSheetNotes);
-            this.group1.Label = "SheetNotes";
+            this.group1.Items.Add(this.btnGridNotes);
+            this.group1.Label = "Grid Notes";
             this.group1.Name = "group1";
             // 
-            // btnSheetNotes
+            // btnGridNotes
             // 
-            this.btnSheetNotes.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btnSheetNotes.Image = ((System.Drawing.Image)(resources.GetObject("btnSheetNotes.Image")));
-            this.btnSheetNotes.Label = "SheetNotes";
-            this.btnSheetNotes.Name = "btnSheetNotes";
-            this.btnSheetNotes.ShowImage = true;
-            this.btnSheetNotes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSheetNotes_Click);
+            this.btnGridNotes.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnGridNotes.Image = ((System.Drawing.Image)(resources.GetObject("btnGridNotes.Image")));
+            this.btnGridNotes.Label = "Grid Notes";
+            this.btnGridNotes.Name = "btnGridNotes";
+            this.btnGridNotes.ShowImage = true;
+            this.btnGridNotes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSheetNotes_Click);
             // 
             // Ribbon1
             // 
@@ -82,7 +82,7 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSheetNotes;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnGridNotes;
     }
 
     partial class ThisRibbonCollection

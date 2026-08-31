@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace SheetNotes
 {
-    public partial class frmSheetNotes : Form
+    public partial class frmGridNotes : Form
     {
         private string existingNotes = "";
 
-        public frmSheetNotes()
+        public frmGridNotes()
         {
             InitializeComponent();
         }
@@ -189,6 +189,11 @@ namespace SheetNotes
                     "Error clearing notes: " + ex.Message,
                     "Clear Error");
             }
+        }
+
+        private void frmGridNotes_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

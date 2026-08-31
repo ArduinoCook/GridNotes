@@ -17,7 +17,7 @@ namespace SheetNotes
         {
             //System.Windows.Forms.MessageBox.Show("Hello from SheetNotes");
 
-            frmSheetNotes form = new frmSheetNotes();
+            frmGridNotes form = new frmGridNotes();
             form.Show();
 
         }

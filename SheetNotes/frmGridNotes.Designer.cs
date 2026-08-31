@@ -2,7 +2,7 @@
 
 namespace SheetNotes
 {
-    partial class frmSheetNotes
+    partial class frmGridNotes
     {
         /// <summary>
         /// Required designer variable.
@@ -31,23 +31,23 @@ namespace SheetNotes
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.AddTab = new System.Windows.Forms.Button();
+            this.btnRenameTab = new System.Windows.Forms.Button();
+            this.btnDeleteTab = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.tabGrid = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.richTextBox4 = new System.Windows.Forms.RichTextBox();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.AddTab = new System.Windows.Forms.Button();
-            this.btnRenameTab = new System.Windows.Forms.Button();
-            this.btnDeleteTab = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.tabGrid.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -61,6 +61,59 @@ namespace SheetNotes
             this.panel1.TabIndex = 1;
             this.panel1.Click += new System.EventHandler(this.FRMSheetNotes_Load);
             // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btnClose);
+            this.panel2.Controls.Add(this.AddTab);
+            this.panel2.Controls.Add(this.btnRenameTab);
+            this.panel2.Controls.Add(this.btnDeleteTab);
+            this.panel2.Controls.Add(this.btnSave);
+            this.panel2.Location = new System.Drawing.Point(10, 9);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(597, 82);
+            this.panel2.TabIndex = 6;
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(126, 16);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(89, 47);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // AddTab
+            // 
+            this.AddTab.Location = new System.Drawing.Point(231, 16);
+            this.AddTab.Name = "AddTab";
+            this.AddTab.Size = new System.Drawing.Size(102, 47);
+            this.AddTab.TabIndex = 1;
+            this.AddTab.Text = "Add Tab";
+            this.AddTab.UseVisualStyleBackColor = true;
+            this.AddTab.Click += new System.EventHandler(this.AddTab_Click);
+            // 
+            // btnRenameTab
+            // 
+            this.btnRenameTab.Location = new System.Drawing.Point(347, 16);
+            this.btnRenameTab.Name = "btnRenameTab";
+            this.btnRenameTab.Size = new System.Drawing.Size(120, 47);
+            this.btnRenameTab.TabIndex = 3;
+            this.btnRenameTab.Text = "Rename Tab";
+            this.btnRenameTab.UseVisualStyleBackColor = true;
+            this.btnRenameTab.Click += new System.EventHandler(this.btnRenameTab_Click);
+            // 
+            // btnDeleteTab
+            // 
+            this.btnDeleteTab.Location = new System.Drawing.Point(477, 16);
+            this.btnDeleteTab.Name = "btnDeleteTab";
+            this.btnDeleteTab.Size = new System.Drawing.Size(103, 47);
+            this.btnDeleteTab.TabIndex = 4;
+            this.btnDeleteTab.Text = "Delete Tab";
+            this.btnDeleteTab.UseVisualStyleBackColor = true;
+            this.btnDeleteTab.Click += new System.EventHandler(this.btnDeleteTab_Click);
+            // 
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(18, 16);
@@ -70,6 +123,16 @@ namespace SheetNotes
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(633, 29);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(90, 40);
+            this.btnClear.TabIndex = 5;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // tabGrid
             // 
@@ -109,7 +172,7 @@ namespace SheetNotes
             this.tabPage4.Controls.Add(this.richTextBox4);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(720, 311);
+            this.tabPage4.Size = new System.Drawing.Size(720, 302);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "VBA Code";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -119,86 +182,25 @@ namespace SheetNotes
             this.richTextBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox4.Location = new System.Drawing.Point(0, 0);
             this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(720, 311);
+            this.richTextBox4.Size = new System.Drawing.Size(720, 302);
             this.richTextBox4.TabIndex = 0;
             this.richTextBox4.Text = "";
             // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(633, 29);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(90, 40);
-            this.btnClear.TabIndex = 5;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(126, 16);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(89, 47);
-            this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // AddTab
-            // 
-            this.AddTab.Location = new System.Drawing.Point(234, 16);
-            this.AddTab.Name = "AddTab";
-            this.AddTab.Size = new System.Drawing.Size(102, 47);
-            this.AddTab.TabIndex = 1;
-            this.AddTab.Text = "Add Tab";
-            this.AddTab.UseVisualStyleBackColor = true;
-            this.AddTab.Click += new System.EventHandler(this.AddTab_Click);
-            // 
-            // btnRenameTab
-            // 
-            this.btnRenameTab.Location = new System.Drawing.Point(351, 16);
-            this.btnRenameTab.Name = "btnRenameTab";
-            this.btnRenameTab.Size = new System.Drawing.Size(120, 47);
-            this.btnRenameTab.TabIndex = 3;
-            this.btnRenameTab.Text = "Rename Tab";
-            this.btnRenameTab.UseVisualStyleBackColor = true;
-            this.btnRenameTab.Click += new System.EventHandler(this.btnRenameTab_Click);
-            // 
-            // btnDeleteTab
-            // 
-            this.btnDeleteTab.Location = new System.Drawing.Point(477, 16);
-            this.btnDeleteTab.Name = "btnDeleteTab";
-            this.btnDeleteTab.Size = new System.Drawing.Size(103, 47);
-            this.btnDeleteTab.TabIndex = 4;
-            this.btnDeleteTab.Text = "Delete Tab";
-            this.btnDeleteTab.UseVisualStyleBackColor = true;
-            this.btnDeleteTab.Click += new System.EventHandler(this.btnDeleteTab_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnClose);
-            this.panel2.Controls.Add(this.AddTab);
-            this.panel2.Controls.Add(this.btnRenameTab);
-            this.panel2.Controls.Add(this.btnDeleteTab);
-            this.panel2.Controls.Add(this.btnSave);
-            this.panel2.Location = new System.Drawing.Point(10, 9);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(597, 82);
-            this.panel2.TabIndex = 6;
-            // 
-            // frmSheetNotes
+            // frmGridNotes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(732, 440);
             this.Controls.Add(this.tabGrid);
             this.Controls.Add(this.panel1);
-            this.Name = "frmSheetNotes";
-            this.Text = "SheetNotes";
+            this.Name = "frmGridNotes";
+            this.Text = "GridNotes";
+            this.Load += new System.EventHandler(this.frmGridNotes_Load);
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.tabGrid.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

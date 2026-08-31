@@ -185,17 +185,17 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="frmSheetNotes.cs">
+    <Compile Include="frmGridNotes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSheetNotes.Designer.cs">
-      <DependentUpon>frmSheetNotes.cs</DependentUpon>
+    <Compile Include="frmGridNotes.Designer.cs">
+      <DependentUpon>frmGridNotes.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="frmSheetNotes.resx">
-      <DependentUpon>frmSheetNotes.cs</DependentUpon>
+    <EmbeddedResource Include="frmGridNotes.resx">
+      <DependentUpon>frmGridNotes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
