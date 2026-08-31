@@ -59,7 +59,7 @@
             // 
             this.btnGridNotes.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.btnGridNotes.Image = ((System.Drawing.Image)(resources.GetObject("btnGridNotes.Image")));
-            this.btnGridNotes.Label = "Grid Notes";
+            this.btnGridNotes.Label = "Grid Notes ";
             this.btnGridNotes.Name = "btnGridNotes";
             this.btnGridNotes.ShowImage = true;
             this.btnGridNotes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSheetNotes_Click);

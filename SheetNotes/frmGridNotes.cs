@@ -69,28 +69,36 @@ namespace SheetNotes
             Close();
         }
 
+        private void SaveTabNames()
+        {
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "Grid Notes Tabs.txt");
+
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach (TabPage tab in tabGrid.TabPages)
+                {
+                    writer.WriteLine(tab.Text);
+                }
+            }
+        }
+
         private void AddTab_Click(object sender, EventArgs e)
         {
-            
-        {
-            // Create a new TabPage
             TabPage newTab = new TabPage("New Tab");
 
-            // Create a RichTextBox for the new tab
             RichTextBox newRichTextBox = new RichTextBox();
-
-            // Make it fill the tab
             newRichTextBox.Dock = DockStyle.Fill;
 
-            // Add the RichTextBox to the new tab
             newTab.Controls.Add(newRichTextBox);
 
-            // Add the new tab to tabGrid
             tabGrid.TabPages.Add(newTab);
 
-            // Select the new tab
             tabGrid.SelectedTab = newTab;
-        }
+
+            // Save the new tab
+            SaveTabNames();
         }
 
         private void btnRenameTab_Click(object sender, EventArgs e)
@@ -145,6 +153,9 @@ namespace SheetNotes
                     if (!string.IsNullOrWhiteSpace(textBox.Text))
                     {
                         tabGrid.SelectedTab.Text = textBox.Text.Trim();
+
+                        // Save the renamed tab
+                        SaveTabNames();
                     }
                 }
             }
@@ -164,6 +175,9 @@ namespace SheetNotes
             if (result == DialogResult.Yes)
             {
                 tabGrid.TabPages.Remove(tabGrid.SelectedTab);
+
+                // Save the new tab list
+                SaveTabNames();
             }
         }
 
@@ -193,7 +207,33 @@ namespace SheetNotes
 
         private void frmGridNotes_Load(object sender, EventArgs e)
         {
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "Grid Notes Tabs.txt");
 
+            if (File.Exists(filePath))
+            {
+                string[] tabNames = File.ReadAllLines(filePath);
+
+                foreach (string tabName in tabNames)
+                {
+                    if (string.IsNullOrWhiteSpace(tabName))
+                        continue;
+
+                    // Don't add the two original tabs again
+                    if (tabName == "Notes" || tabName == "VBA Code")
+                        continue;
+
+                    TabPage newTab = new TabPage(tabName);
+
+                    RichTextBox newRichTextBox = new RichTextBox();
+                    newRichTextBox.Dock = DockStyle.Fill;
+
+                    newTab.Controls.Add(newRichTextBox);
+
+                    tabGrid.TabPages.Add(newTab);
+                }
+            }
         }
     }
 }
