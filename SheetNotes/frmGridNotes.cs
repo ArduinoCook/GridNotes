@@ -1,17 +1,62 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SheetNotes
 {
     public partial class frmGridNotes : Form
     {
+
         private string existingNotes = "";
 
         public frmGridNotes()
         {
             InitializeComponent();
+
+
+        }
+
+        private void SaveCurrentTabText()
+        {
+            if (tabGrid.SelectedTab == null)
+                return;
+
+            string tabName = tabGrid.SelectedTab.Text;
+
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                tabName + ".txt");
+
+            RichTextBox richTextBox =
+                tabGrid.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+
+            if (richTextBox == null)
+                return;
+
+            File.WriteAllText(filePath, richTextBox.Text);
+        }
+
+        private void LoadTabText(TabPage tab)
+        {
+            string tabName = tab.Text;
+
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                tabName + ".txt");
+
+            if (!File.Exists(filePath))
+                return;
+
+            RichTextBox richTextBox =
+                tab.Controls.OfType<RichTextBox>()
+                .FirstOrDefault();
+
+            if (richTextBox == null)
+                return;
+
+            richTextBox.Text = File.ReadAllText(filePath);
         }
 
         private int existingNotesLength = 0;
@@ -42,6 +87,8 @@ namespace SheetNotes
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            SaveCurrentTabText();
+
             try
             {
                 string filePath = Path.Combine(
@@ -106,7 +153,7 @@ namespace SheetNotes
             if (tabGrid.SelectedTab == null)
                 return;
 
-            string currentName = tabGrid.SelectedTab.Text;
+            string oldName = tabGrid.SelectedTab.Text;
 
             using (Form renameForm = new Form())
             {
@@ -123,7 +170,7 @@ namespace SheetNotes
                 label.AutoSize = true;
 
                 TextBox textBox = new TextBox();
-                textBox.Text = currentName;
+                textBox.Text = oldName;
                 textBox.Location = new Point(15, 40);
                 textBox.Width = 300;
 
@@ -150,13 +197,46 @@ namespace SheetNotes
 
                 if (renameForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (!string.IsNullOrWhiteSpace(textBox.Text))
-                    {
-                        tabGrid.SelectedTab.Text = textBox.Text.Trim();
+                    string newName = textBox.Text.Trim();
 
-                        // Save the renamed tab
-                        SaveTabNames();
+                    if (string.IsNullOrWhiteSpace(newName))
+                        return;
+
+                    if (newName == oldName)
+                        return;
+
+                    string documentsPath =
+                        Environment.GetFolderPath(
+                            Environment.SpecialFolder.MyDocuments);
+
+                    string oldFilePath =
+                        Path.Combine(documentsPath, oldName + ".txt");
+
+                    string newFilePath =
+                        Path.Combine(documentsPath, newName + ".txt");
+
+                    // Rename the text file if it exists
+                    if (File.Exists(oldFilePath))
+                    {
+                        if (File.Exists(newFilePath))
+                        {
+                            MessageBox.Show(
+                                "A text file with that tab name already exists.",
+                                "Rename Tab",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+
+                            return;
+                        }
+
+                        File.Move(oldFilePath, newFilePath);
                     }
+
+                    // Rename the tab
+                    tabGrid.SelectedTab.Text = newName;
+
+                    // Save the updated tab list
+                    SaveTabNames();
                 }
             }
         }
@@ -166,17 +246,45 @@ namespace SheetNotes
             if (tabGrid.SelectedTab == null)
                 return;
 
+            string tabName = tabGrid.SelectedTab.Text;
+
+            // Don't allow the original tabs to be deleted
+            if (tabName == "Notes" || tabName == "VBA Code")
+            {
+                MessageBox.Show(
+                    "The original tabs cannot be deleted.",
+                    "Delete Tab",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return;
+            }
+
             DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete this tab?",
+                "Are you sure you want to delete the '" + tabName + "' tab?",
                 "Delete Tab",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
+                string documentsPath =
+                    Environment.GetFolderPath(
+                        Environment.SpecialFolder.MyDocuments);
+
+                string filePath =
+                    Path.Combine(documentsPath, tabName + ".txt");
+
+                // Delete the tab's text file
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+
+                // Remove the tab
                 tabGrid.TabPages.Remove(tabGrid.SelectedTab);
 
-                // Save the new tab list
+                // Save the updated tab list
                 SaveTabNames();
             }
         }
@@ -205,6 +313,7 @@ namespace SheetNotes
             }
         }
 
+
         private void frmGridNotes_Load(object sender, EventArgs e)
         {
             string filePath = Path.Combine(
@@ -232,8 +341,11 @@ namespace SheetNotes
                     newTab.Controls.Add(newRichTextBox);
 
                     tabGrid.TabPages.Add(newTab);
+
+                    // Load this tab's saved text
+                    LoadTabText(newTab);
                 }
             }
         }
     }
-}
+ }

@@ -194,7 +194,7 @@ namespace SheetNotes
             this.Controls.Add(this.tabGrid);
             this.Controls.Add(this.panel1);
             this.Name = "frmGridNotes";
-            this.Text = "GridNotes";
+            this.Text = "Grid Notes";
             this.Load += new System.EventHandler(this.frmGridNotes_Load);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
