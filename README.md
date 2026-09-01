@@ -11,6 +11,9 @@ When working with spreadsheets, it's common to need somewhere to write down an e
 
 Instead of opening Notepad, Word, or another application, Grid Notes gives you a dedicated workspace directly inside Excel.
 
+<img width="731" height="477" alt="image" src="https://github.com/user-attachments/assets/7a37b42d-5c55-410a-9cc7-7026e247d142" />
+
+
 Why I Created Grid Notes
 
 I created Grid Notes because working with data often involves more than just the spreadsheet itself.
