@@ -30,6 +30,7 @@ namespace SheetNotes
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGridNotes));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
@@ -193,6 +194,7 @@ namespace SheetNotes
             this.ClientSize = new System.Drawing.Size(732, 440);
             this.Controls.Add(this.tabGrid);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmGridNotes";
             this.Text = "Grid Notes";
             this.Load += new System.EventHandler(this.frmGridNotes_Load);
