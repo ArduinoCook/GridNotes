@@ -58,6 +58,10 @@ JOINs
 Stored procedure scripts
 Queries used for testing
 Temporary SQL code
+Even VBA Code
+
+<img width="735" height="482" alt="image" src="https://github.com/user-attachments/assets/cac6d024-f30d-4bb1-8040-5c0b390dca49" />
+
 
 This makes Grid Notes particularly useful for people who work with both Excel and SQL Server.
 
