@@ -37,8 +37,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.btnGridNotes = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.btnGridNotes = this.Factory.CreateRibbonButton();
             this.separator2 = this.Factory.CreateRibbonSeparator();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
@@ -59,6 +59,10 @@
             this.group1.Label = " Grid Notes";
             this.group1.Name = "group1";
             // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
             // btnGridNotes
             // 
             this.btnGridNotes.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -67,10 +71,6 @@
             this.btnGridNotes.Name = "btnGridNotes";
             this.btnGridNotes.ShowImage = true;
             this.btnGridNotes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSheetNotes_Click);
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
             // 
             // separator2
             // 
