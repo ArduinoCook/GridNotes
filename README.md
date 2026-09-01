@@ -4,6 +4,9 @@ Notes, SQL Code and Data — Right Where You Work
 
 Grid Notes is an Excel add-in created to make it easier to keep useful notes, SQL code, and working information together while working in Excel.
 
+<img width="1107" height="227" alt="image" src="https://github.com/user-attachments/assets/b8091075-7ac3-480f-ab4c-bd6cb330bc68" />
+
+
 When working with spreadsheets, it's common to need somewhere to write down an explanation, remember a piece of SQL, document a calculation, record a data issue, or simply make a quick note about what you're doing.
 
 Instead of opening Notepad, Word, or another application, Grid Notes gives you a dedicated workspace directly inside Excel.
