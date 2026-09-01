@@ -18,7 +18,8 @@ namespace SheetNotes
 
         }
 
-        private void SaveCurrentTabText()
+   
+private void SaveCurrentTabText()
         {
             if (tabGrid.SelectedTab == null)
                 return;
@@ -29,14 +30,30 @@ namespace SheetNotes
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 tabName + ".txt");
 
-            RichTextBox richTextBox =
-                tabGrid.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            RichTextBox richTextBox = FindRichTextBox(tabGrid.SelectedTab);
 
             if (richTextBox == null)
                 return;
 
             File.WriteAllText(filePath, richTextBox.Text);
         }
+
+        private RichTextBox FindRichTextBox(Control parent)
+        {
+            foreach (Control control in parent.Controls)
+            {
+                if (control is RichTextBox richTextBox)
+                    return richTextBox;
+
+                RichTextBox found = FindRichTextBox(control);
+
+                if (found != null)
+                    return found;
+            }
+
+            return null;
+        }
+
 
         private void LoadTabText(TabPage tab)
         {
