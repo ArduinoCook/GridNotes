@@ -38,6 +38,8 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btnGridNotes = this.Factory.CreateRibbonButton();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -51,18 +53,28 @@
             // 
             // group1
             // 
+            this.group1.Items.Add(this.separator1);
             this.group1.Items.Add(this.btnGridNotes);
-            this.group1.Label = "Grid Notes";
+            this.group1.Items.Add(this.separator2);
+            this.group1.Label = " Grid Notes";
             this.group1.Name = "group1";
             // 
             // btnGridNotes
             // 
             this.btnGridNotes.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.btnGridNotes.Image = ((System.Drawing.Image)(resources.GetObject("btnGridNotes.Image")));
-            this.btnGridNotes.Label = "Grid Notes ";
+            this.btnGridNotes.Label = "Grid Notes           ";
             this.btnGridNotes.Name = "btnGridNotes";
             this.btnGridNotes.ShowImage = true;
             this.btnGridNotes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSheetNotes_Click);
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
             // 
             // Ribbon1
             // 
@@ -83,6 +95,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnGridNotes;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
     }
 
     partial class ThisRibbonCollection

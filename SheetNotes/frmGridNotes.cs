@@ -87,25 +87,23 @@ namespace SheetNotes
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveCurrentTabText();
-
             try
             {
-                string filePath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "Sheet Notes.txt");
+                SaveCurrentTabText();
 
-                string textToSave = richTextBox2.Text;
-
-                File.WriteAllText(filePath, textToSave);
-
-                MessageBox.Show("Saved successfully.");
+                MessageBox.Show(
+                    "Saved successfully.",
+                    "Save",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
                     "Error saving: " + ex.Message,
-                    "Save Error");
+                    "Save Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -289,29 +287,62 @@ namespace SheetNotes
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+       
+private void btnClear_Click(object sender, EventArgs e)
         {
             try
             {
+                // Make sure a tab is selected
+                if (tabGrid.SelectedTab == null)
+                    return;
+
+                // Get the selected tab name
+                string tabName = tabGrid.SelectedTab.Text;
+
+                // Find the RichTextBox on the selected tab
+                RichTextBox richTextBox =
+                    tabGrid.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+
+                if (richTextBox == null)
+                    return;
+
+                // Confirm before clearing
+                DialogResult result = MessageBox.Show(
+                    "Are you sure you want to clear all text in '" + tabName + "'?",
+                    "Clear Notes",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No)
+                    return;
+
+                // Build the file path for this tab
                 string filePath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "Sheet Notes.txt");
-
-                // Clear the text file
-                File.WriteAllText(filePath, string.Empty);
+                    tabName + ".txt");
 
                 // Clear the RichTextBox
-                richTextBox2.Clear();
+                richTextBox.Clear();
 
-                MessageBox.Show("All notes have been cleared.");
+                // Clear the corresponding text file
+                File.WriteAllText(filePath, string.Empty);
+
+                MessageBox.Show(
+                    "'" + tabName + "' has been cleared.",
+                    "Clear Notes",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
                     "Error clearing notes: " + ex.Message,
-                    "Clear Error");
+                    "Clear Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
+
 
 
         private void frmGridNotes_Load(object sender, EventArgs e)
