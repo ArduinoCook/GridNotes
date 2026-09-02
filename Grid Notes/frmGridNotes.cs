@@ -1,42 +1,24 @@
-﻿using System;
+﻿
+using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace SheetNotes
 {
     public partial class frmGridNotes : Form
     {
-
-        private string existingNotes = "";
+        private bool hasLoadedTabs = false;
 
         public frmGridNotes()
         {
             InitializeComponent();
-
-
         }
 
-   
-private void SaveCurrentTabText()
-        {
-            if (tabGrid.SelectedTab == null)
-                return;
 
-            string tabName = tabGrid.SelectedTab.Text;
-
-            string filePath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                tabName + ".txt");
-
-            RichTextBox richTextBox = FindRichTextBox(tabGrid.SelectedTab);
-
-            if (richTextBox == null)
-                return;
-
-            File.WriteAllText(filePath, richTextBox.Text);
-        }
+        // ============================================================
+        // FIND THE RICHTEXTBOX ON A TAB
+        // ============================================================
 
         private RichTextBox FindRichTextBox(Control parent)
         {
@@ -55,6 +37,35 @@ private void SaveCurrentTabText()
         }
 
 
+        // ============================================================
+        // SAVE THE CURRENT TAB
+        // ============================================================
+
+        private void SaveCurrentTabText()
+        {
+            if (tabGrid.SelectedTab == null)
+                return;
+
+            string tabName = tabGrid.SelectedTab.Text;
+
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                tabName + ".txt");
+
+            RichTextBox richTextBox =
+                FindRichTextBox(tabGrid.SelectedTab);
+
+            if (richTextBox == null)
+                return;
+
+            File.WriteAllText(filePath, richTextBox.Text);
+        }
+
+
+        // ============================================================
+        // LOAD A TAB'S SAVED TEXT
+        // ============================================================
+
         private void LoadTabText(TabPage tab)
         {
             string tabName = tab.Text;
@@ -67,8 +78,7 @@ private void SaveCurrentTabText()
                 return;
 
             RichTextBox richTextBox =
-                tab.Controls.OfType<RichTextBox>()
-                .FirstOrDefault();
+                FindRichTextBox(tab);
 
             if (richTextBox == null)
                 return;
@@ -76,31 +86,103 @@ private void SaveCurrentTabText()
             richTextBox.Text = File.ReadAllText(filePath);
         }
 
-        private int existingNotesLength = 0;
-        private void FRMSheetNotes_Load(object sender, EventArgs e)
+
+        // ============================================================
+        // SAVE TAB NAMES
+        // ============================================================
+
+        private void SaveTabNames()
         {
             string filePath = Path.Combine(
-     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-     "Sheet Notes.txt");
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "Grid Notes Tabs.txt");
 
-            if (File.Exists(filePath))
+            using (StreamWriter writer = new StreamWriter(filePath))
             {
-                existingNotes = File.ReadAllText(filePath);
-
-                richTextBox2.Text = existingNotes;
+                foreach (TabPage tab in tabGrid.TabPages)
+                {
+                    writer.WriteLine(tab.Text);
+                }
             }
-            else
-            {
-                existingNotes = "";
-                richTextBox2.Text = "";
-            }
-
-            richTextBox2.SelectionStart = 0;
-            richTextBox2.SelectionLength = 0;
-            richTextBox2.Focus();
         }
 
 
+        // ============================================================
+        // LOAD SAVED TABS
+        // ============================================================
+
+        private void LoadSavedTabs()
+        {
+            // Prevent the tabs from being loaded more than once.
+            if (hasLoadedTabs)
+                return;
+
+            hasLoadedTabs = true;
+
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "Grid Notes Tabs.txt");
+
+            if (!File.Exists(filePath))
+                return;
+
+            string[] tabNames = File.ReadAllLines(filePath);
+
+            foreach (string tabName in tabNames)
+            {
+                if (string.IsNullOrWhiteSpace(tabName))
+                    continue;
+
+                // Don't add the two original tabs again.
+                if (tabName == "Notes" || tabName == "VBA Code")
+                    continue;
+
+                TabPage newTab = new TabPage(tabName);
+
+                RichTextBox newRichTextBox = new RichTextBox();
+                newRichTextBox.Dock = DockStyle.Fill;
+
+                newTab.Controls.Add(newRichTextBox);
+
+                tabGrid.TabPages.Add(newTab);
+
+                // Load this tab's saved text.
+                LoadTabText(newTab);
+            }
+        }
+
+
+        // ============================================================
+        // FORM LOAD
+        // ============================================================
+
+        private void frmGridNotes_Load(object sender, EventArgs e)
+        {
+            // Load the original Notes tab
+            LoadTabText(tabPage2);
+
+            // Load the original VBA Code tab
+            LoadTabText(tabPage4);
+
+            // Load any additional tabs created by the user
+            LoadSavedTabs();
+        }
+
+
+        // ============================================================
+        // OLD FORM LOAD EVENT
+        // ============================================================
+        //
+        // This is kept because your Designer may still be connected
+        // to the old event name. It now simply loads the saved tabs.
+        //
+
+        
+
+
+        // ============================================================
+        // SAVE BUTTON
+        // ============================================================
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -125,26 +207,19 @@ private void SaveCurrentTabText()
         }
 
 
+        // ============================================================
+        // CLOSE BUTTON
+        // ============================================================
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void SaveTabNames()
-        {
-            string filePath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "Grid Notes Tabs.txt");
 
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                foreach (TabPage tab in tabGrid.TabPages)
-                {
-                    writer.WriteLine(tab.Text);
-                }
-            }
-        }
+        // ============================================================
+        // ADD TAB
+        // ============================================================
 
         private void AddTab_Click(object sender, EventArgs e)
         {
@@ -159,9 +234,14 @@ private void SaveCurrentTabText()
 
             tabGrid.SelectedTab = newTab;
 
-            // Save the new tab
+            // Save the new tab name.
             SaveTabNames();
         }
+
+
+        // ============================================================
+        // RENAME TAB
+        // ============================================================
 
         private void btnRenameTab_Click(object sender, EventArgs e)
         {
@@ -230,7 +310,7 @@ private void SaveCurrentTabText()
                     string newFilePath =
                         Path.Combine(documentsPath, newName + ".txt");
 
-                    // Rename the text file if it exists
+                    // Rename the text file if it exists.
                     if (File.Exists(oldFilePath))
                     {
                         if (File.Exists(newFilePath))
@@ -247,14 +327,19 @@ private void SaveCurrentTabText()
                         File.Move(oldFilePath, newFilePath);
                     }
 
-                    // Rename the tab
+                    // Rename the tab.
                     tabGrid.SelectedTab.Text = newName;
 
-                    // Save the updated tab list
+                    // Save the updated tab list.
                     SaveTabNames();
                 }
             }
         }
+
+
+        // ============================================================
+        // DELETE TAB
+        // ============================================================
 
         private void btnDeleteTab_Click(object sender, EventArgs e)
         {
@@ -263,7 +348,7 @@ private void SaveCurrentTabText()
 
             string tabName = tabGrid.SelectedTab.Text;
 
-            // Don't allow the original tabs to be deleted
+            // Don't allow the original tabs to be deleted.
             if (tabName == "Notes" || tabName == "VBA Code")
             {
                 MessageBox.Show(
@@ -290,42 +375,43 @@ private void SaveCurrentTabText()
                 string filePath =
                     Path.Combine(documentsPath, tabName + ".txt");
 
-                // Delete the tab's text file
+                // Delete the tab's text file.
                 if (File.Exists(filePath))
                 {
                     File.Delete(filePath);
                 }
 
-                // Remove the tab
+                // Remove the tab.
                 tabGrid.TabPages.Remove(tabGrid.SelectedTab);
 
-                // Save the updated tab list
+                // Save the updated tab list.
                 SaveTabNames();
             }
         }
 
-       
-private void btnClear_Click(object sender, EventArgs e)
+
+        // ============================================================
+        // CLEAR BUTTON
+        // ============================================================
+
+        private void btnClear_Click(object sender, EventArgs e)
         {
             try
             {
-                // Make sure a tab is selected
                 if (tabGrid.SelectedTab == null)
                     return;
 
-                // Get the selected tab name
                 string tabName = tabGrid.SelectedTab.Text;
 
-                // Find the RichTextBox on the selected tab
                 RichTextBox richTextBox =
-                    tabGrid.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                    FindRichTextBox(tabGrid.SelectedTab);
 
                 if (richTextBox == null)
                     return;
 
-                // Confirm before clearing
                 DialogResult result = MessageBox.Show(
-                    "Are you sure you want to clear all text in '" + tabName + "'?",
+                    "Are you sure you want to clear all text in '" +
+                    tabName + "'?",
                     "Clear Notes",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
@@ -333,15 +419,15 @@ private void btnClear_Click(object sender, EventArgs e)
                 if (result == DialogResult.No)
                     return;
 
-                // Build the file path for this tab
                 string filePath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    Environment.GetFolderPath(
+                        Environment.SpecialFolder.MyDocuments),
                     tabName + ".txt");
 
-                // Clear the RichTextBox
+                // Clear the RichTextBox.
                 richTextBox.Clear();
 
-                // Clear the corresponding text file
+                // Clear the corresponding text file.
                 File.WriteAllText(filePath, string.Empty);
 
                 MessageBox.Show(
@@ -359,41 +445,6 @@ private void btnClear_Click(object sender, EventArgs e)
                     MessageBoxIcon.Error);
             }
         }
-
-
-
-        private void frmGridNotes_Load(object sender, EventArgs e)
-        {
-            string filePath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "Grid Notes Tabs.txt");
-
-            if (File.Exists(filePath))
-            {
-                string[] tabNames = File.ReadAllLines(filePath);
-
-                foreach (string tabName in tabNames)
-                {
-                    if (string.IsNullOrWhiteSpace(tabName))
-                        continue;
-
-                    // Don't add the two original tabs again
-                    if (tabName == "Notes" || tabName == "VBA Code")
-                        continue;
-
-                    TabPage newTab = new TabPage(tabName);
-
-                    RichTextBox newRichTextBox = new RichTextBox();
-                    newRichTextBox.Dock = DockStyle.Fill;
-
-                    newTab.Controls.Add(newRichTextBox);
-
-                    tabGrid.TabPages.Add(newTab);
-
-                    // Load this tab's saved text
-                    LoadTabText(newTab);
-                }
-            }
-        }
     }
- }
+}
+

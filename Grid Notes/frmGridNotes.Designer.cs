@@ -60,7 +60,7 @@ namespace SheetNotes
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(732, 109);
             this.panel1.TabIndex = 1;
-            this.panel1.Click += new System.EventHandler(this.FRMSheetNotes_Load);
+           
             // 
             // panel2
             // 
@@ -166,7 +166,7 @@ namespace SheetNotes
             this.richTextBox2.Size = new System.Drawing.Size(714, 296);
             this.richTextBox2.TabIndex = 0;
             this.richTextBox2.Text = "";
-            this.richTextBox2.VisibleChanged += new System.EventHandler(this.FRMSheetNotes_Load);
+           
             // 
             // tabPage4
             // 
