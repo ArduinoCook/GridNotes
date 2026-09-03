@@ -34,13 +34,13 @@
     <PublishUrl>C:\Users\User\Desktop\GridNotes\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.1</ApplicationVersion>
+    <ApplicationVersion>1.0.0.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateInterval>7</UpdateInterval>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <ProductName>SheetNotes</ProductName>
-    <PublisherName />
+    <ProductName>Grid Notes</ProductName>
+    <PublisherName>Werner Mitchell</PublisherName>
     <SupportUrl />
     <FriendlyName>SheetNotes</FriendlyName>
     <OfficeApplicationDescription />
