@@ -1,3 +1,13 @@
+# Grid Notes
+
+## Download Grid Notes
+
+[**Download Grid Notes Installer**](./Setup.exe)
+
+> **Installation:** Download `Setup.exe` and run it. Grid Notes will install as an Excel add-in.
+
+---
+
 # GridNotes
 Grid Notes
 Notes, SQL Code and Data — Right Where You Work
