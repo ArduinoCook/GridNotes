@@ -2,7 +2,7 @@
 
 ## Download Grid Notes
 
-[**Download Grid Notes Installer**](./Setup.exe)
+[**Download Grid Notes Installer**](https://github.com/ArduinoCook/GridNotes/raw/refs/heads/main/setup.exe)
 
 > **Installation:** Download `Setup.exe` and run it. Grid Notes will install as an Excel add-in.
 
