@@ -4,6 +4,8 @@
 
 **Installation:** Download `setup.exe` and run it. Grid Notes will install as an Excel add-in.
 
+Important: Grid Notes is not currently signed with a publicly trusted code-signing certificate. Windows may therefore prevent the ClickOnce installer from running. For now, please download or clone the source code from this GitHub repository and build the project using Visual Studio.
+
 # GridNotes
 
 Grid Notes
